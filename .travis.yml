@@ -1,24 +1,25 @@
 language: node_js
 
 node_js:
-  - "node"
+  - "10"
 
 install:
-  - npm install
+  - npm ci
 
 script:
   - npm run lint
 
-before_deploy:
-  - npm run build
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: true
-  repo: luanvuvt/luanvuvt.github.io
-  target-branch: master
-  local-dir: ./public
-  on:
-    branch: master
+jobs:
+  include:
+    - stage: deploy
+      script: npm run build
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: true
+        repo: luanvuvt/luanvuvt.github.io
+        target-branch: master
+        local-dir: ./public
+        on:
+          branch: master
