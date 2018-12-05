@@ -1,18 +1,16 @@
 language: node_js
 
-os:
-  - linux
-  - osx
-
 node_js:
   - "node"
-  - "lts/*"
-  - "7"
-  - "8"
+
+install:
+  - npm install
 
 script:
-  - npm install
   - npm run lint
+
+before_deploy:
+  - npm run build
 
 deploy:
   provider: pages
@@ -20,5 +18,7 @@ deploy:
   github-token: $GITHUB_TOKEN
   keep-history: true
   repo: luanvuvt/luanvuvt.github.io
+  target-branch: master
+  local-dir: ./public
   on:
     branch: master
